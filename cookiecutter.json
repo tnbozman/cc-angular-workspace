@@ -1,0 +1,8 @@
+{
+    "project_name": "project name",
+    "workspace": "{{cookiecutter.project_name|lower|replace(' ', '-')|replace('_', '-')}}",
+    "library_name": "{{cookiecutter.workspace}}-lib",
+    "author": "tnbozman",
+    "version_control": ["git", "none"]
+}
+

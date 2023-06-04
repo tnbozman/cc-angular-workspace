@@ -1,0 +1,64 @@
+#!/bin/bash
+
+Color_Off='\033[0m'       # Text Reset
+# Regular Colors
+Red='\033[0;31m'          # Red
+Green='\033[0;32m'        # Green
+Blue='\033[0;34m'         # Blue
+Yellow='\033[0;33m'       # Yellow
+Purple='\033[0;35m'       # Purple
+
+remove="${Purple}DELETE${Color_Off}"
+success="${Green}SUCCESS${Color_Off}"
+create="${Green}CREATE${Color_Off}"
+update="${Green}UPDATE${Color_Off}"
+error="${Red}ERROR${Color_Off}"
+starting="${Yellow}STARTING${Color_Off}"
+line="${Yellow}#################################${Color_Off}"
+complete="${Yellow}COMPLETED${Color_Off}"
+
+empty="empty"
+name=$empty
+basePath="/workspace"
+
+command_msg(){
+  if [ $? == 0 ] ; then
+    echo -e "$1 $2"
+  else
+    echo -e "$error $2"
+    exit 1
+  fi
+}
+
+# display help message if -h is a commandline arg
+help_message() {
+  if [[ $1 == "-h" ]]; then
+    echo "Usage patch-existing-lib.sh -n {project name}";
+    echo "-n: Angular project to add environments to";
+    echo "OPTIONS:"
+    echo "-b Root of the angular mono-repo"
+    exit 1
+  fi
+}
+
+while getopts n:b:h flag
+do
+    case "${flag}" in
+        n) name=${OPTARG};;
+        b) basePath=${OPTARG};;
+        h) help="-h";;
+    esac
+done
+
+cd $basePath
+
+echo -e $line
+echo -e "$starting Patching library $name"
+
+# add build scripts to package.json
+npmAddScript -k "watch:$name" -v "ng build $name --watch" -f
+npmAddScript -k "build:$name" -v "ng build $name" -f
+command_msg $update "package.json"
+
+echo -e "$success Library $name patched"
+echo -e $line
