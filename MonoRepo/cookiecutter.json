@@ -1,0 +1,6 @@
+{
+    "workspace_name": "workspace name",
+    "project_name": "project name",
+    "project_path": "{{workspace_name}}/projects/${PROJECT}/src/app",
+    "version_control": ["git", "none"]
+}

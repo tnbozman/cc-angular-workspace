@@ -1,5 +1,10 @@
 #!/bin/bash
 
+WORKSPACE="{{cookiecutter.workspace_name|lower|replace(' ', '-')|replace('_', '-')}}"
+PROJECT="{{cookiecutter.project_name|lower|replace(' ', '-')|replace('_', '-')}}"
+LIB="${PROJECT}-lib"
+$SHELL="shell"
+
 Color_Off='\033[0m'       # Text Reset
 # Regular Colors
 Red='\033[0;31m'          # Red
@@ -26,12 +31,6 @@ command_msg(){
   fi
 }
 
+ng add @ngx-formly/schematics --ui-theme=material --project $PROJECT
+command_msg $success "add Formly to project"
 
-NAME="{{cookiecutter.package}}"
-LIB_NAME="{{cookiecutter.library_name}}"
-
-./hooks/scripts/patch-existing-lib -n $NAME -b ./
-echo "export * from './lib/golden-layout/base-component.directive';" >> ./projects/$LIB_NAME/src/public-api.ts
-command_msg $update "projects/$LIB_NAME/src/public-api.ts"
-echo "export * from './lib/golden-layout/text-component.interface';" >> ./projects/$LIB_NAME/src/public-api.ts
-command_msg $update "projects/$LIB_NAME/src/public-api.ts"

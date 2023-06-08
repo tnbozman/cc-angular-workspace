@@ -1,0 +1,4 @@
+# shell file that 
+- Gets user inputs
+- Creates a cookiecutter config file
+- runs the required cookiecutters to scaffold the project
