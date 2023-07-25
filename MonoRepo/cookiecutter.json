@@ -1,6 +1,9 @@
 {
     "workspace_name": "workspace name",
-    "project_name": "project name",
-    "project_path": "{{workspace_name}}/projects/${PROJECT}/src/app",
+    "workspace": "{{cookiecutter.workspace_name|lower|replace(' ', '-')|replace('_', '-')}",
+    "project_path": "{{cookiecutter.workspace}}/projects/shell/src/app",
+    "library_name": "{{cookiecutter.workspace}}-lib",
+    "add_golden_layout": ["yes", "no"],
+    "add_formly_layout": ["yes", "no"],
     "version_control": ["git", "none"]
 }
